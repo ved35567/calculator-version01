@@ -40,24 +40,22 @@ import { evaluate } from "mathjs"; // Ensure proper input sanitization to avoid 
 function App() {
   const [calVal, setCalVal] = useState("");
 
-  const handleButtonClick = (button) => {
-    switch (button) {
-      case "c":
-        setCalVal("");
-        break;
-      case "=":
-        try {
-          const result = evaluate(calVal);
-          setCalVal(result.toString());
-        } catch (error) {
-          setCalVal("Error");
-        }
-        break;
-      default:
-        setCalVal((prevVal) => prevVal + button);
-        break;
+ const handleButtonClick = (button) => {
+  if (button === "c") {
+    setCalVal("");
+  } else if (button === "=") {
+    try {
+      const result = evaluate(calVal);
+      setCalVal(result.toString()); // Set the result for display
+    } catch (error) {
+      setCalVal("Error");
     }
-  };
+  } else {
+    // Update the value without adding "=" to the expression
+    setCalVal((prevVal) => prevVal + button);
+  }
+};
+
 
   return (
     <div className={styles.Calculator}>
